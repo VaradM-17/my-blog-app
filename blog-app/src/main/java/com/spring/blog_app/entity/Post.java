@@ -26,8 +26,8 @@ public class Post {
 	@Column(name = "title", nullable = false)
 	private String title;
 
-	@Column(name = "descrition", nullable = false)
-	private String descrition;
+	@Column(name = "description", nullable = false)
+	private String description;
 
 	@Column(name = "content", nullable = false)
 	private String content;

@@ -15,7 +15,7 @@ public class PostDto {
 
 	private String title;
 
-	private String descrition;
+	private String description;
 
 	private String content;
 }
