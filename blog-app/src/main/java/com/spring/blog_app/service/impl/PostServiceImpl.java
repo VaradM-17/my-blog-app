@@ -3,10 +3,12 @@ package com.spring.blog_app.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.query.SortDirection;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.spring.blog_app.dto.PostDto;
@@ -22,8 +24,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
 
-	private PostRepository postRepository;
-	private ModelMapper modelMapper;
+	final private PostRepository postRepository;
+	final private ModelMapper modelMapper;
 
 	@Override
 	public PostDto createPost(PostDto postDto) {
@@ -33,8 +35,12 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public PostResponse getAllPost(int pageNo, int pageSize) {
-		Page<Post> posts = postRepository.findAll(PageRequest.of(pageNo, pageSize));
+	public PostResponse getAllPost(int pageNo, int pageSize, String sortBy, String sortDir) {
+
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+
+		Page<Post> posts = postRepository.findAll(PageRequest.of(pageNo, pageSize, Sort.by(sortBy)));
 		List<Post> listOfPosts = posts.getContent();
 
 		List<PostDto> content = listOfPosts.stream().map(post -> modelMapper.map(post, PostDto.class))

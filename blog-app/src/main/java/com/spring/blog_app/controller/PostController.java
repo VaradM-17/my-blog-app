@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.spring.blog_app.dto.PostDto;
 import com.spring.blog_app.dto.PostResponse;
 import com.spring.blog_app.service.PostService;
+import com.spring.blog_app.utils.AppConstants;
 
 import lombok.AllArgsConstructor;
 
@@ -34,13 +35,17 @@ public class PostController {
 //	    return ResponseEntity.ok(postService.getAllPost(pageNo, fixedPageSize));
 //	}
 
-	
-	// Get all blog posts with pagination support
+	// Get all blog posts with pagination and sorting support
 	@GetMapping("/all")
 	public ResponseEntity<PostResponse> getAllPosts(
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-		return ResponseEntity.ok(postService.getAllPost(pageNo, pageSize));
+			@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+			@RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+			@RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+
+	) {
+
+		return ResponseEntity.ok(postService.getAllPost(pageNo, pageSize, sortBy, sortDir));
 	}
 
 	// Get a single blog post by its ID
