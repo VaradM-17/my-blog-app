@@ -6,7 +6,7 @@ import com.spring.blog_app.dto.CommentDto;
 
 public interface CommentService {
 
-	CommentDto createComment(long postId, CommentDto commetDto);
+	CommentDto createComment(Long postId, CommentDto commetDto);
 
 	List<CommentDto> getCommentsByPostId(Long postId);
 

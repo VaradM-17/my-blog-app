@@ -28,11 +28,12 @@ public class CommentServiceImpl implements CommentService {
 	private final ModelMapper modelMapper;
 
 	@Override
-	public CommentDto createComment(long postId, CommentDto commetDto) {
-		Comment comment = modelMapper.map(commetDto, Comment.class);
+	public CommentDto createComment(Long postId, CommentDto commetDto) {
 
 		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new ResourceNotFoundException("Post", "id", String.valueOf(postId)));
+				.orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId.toString()));
+
+		Comment comment = modelMapper.map(commetDto, Comment.class);
 
 		comment.setPost(post);
 		Comment savedComment = commentRepository.save(comment);
