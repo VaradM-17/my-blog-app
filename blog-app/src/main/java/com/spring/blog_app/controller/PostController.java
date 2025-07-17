@@ -9,6 +9,7 @@ import com.spring.blog_app.dto.PostResponse;
 import com.spring.blog_app.service.PostService;
 import com.spring.blog_app.utils.AppConstants;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @CrossOrigin("")
@@ -20,7 +21,7 @@ public class PostController {
 	private PostService postService;
 
 	@PostMapping("/post")
-	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
+	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
 		PostDto newPost = postService.createPost(postDto);
 		return new ResponseEntity<PostDto>(newPost, HttpStatus.CREATED);
 	}
@@ -48,7 +49,7 @@ public class PostController {
 	}
 
 	@PutMapping("update/{id}")
-	public ResponseEntity<PostDto> updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
+	public ResponseEntity<PostDto> updatePost(@PathVariable Long id, @Valid @RequestBody PostDto postDto) {
 		PostDto updatePost = postService.updatePost(id, postDto);
 		return ResponseEntity.ok(updatePost);
 	}
