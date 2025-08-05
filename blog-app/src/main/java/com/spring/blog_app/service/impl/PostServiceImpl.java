@@ -22,8 +22,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
 
-	private PostRepository postRepository;
-	private ModelMapper modelMapper;
+	private final PostRepository postRepository;
+	private final ModelMapper modelMapper;
 
 	@Override
 	public PostDto createPost(PostDto postDto) {

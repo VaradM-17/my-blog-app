@@ -1,5 +1,6 @@
 package com.spring.blog_app.exception;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				webRequest.getDescription(false));
 
 		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(AccessDeniedException.class)
+	public ResponseEntity<ErrorDetails> handleAccessDeniedException(AccessDeniedException exception,
+			WebRequest webRequest) {
+
+		ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
+				webRequest.getDescription(false));
+
+		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.UNAUTHORIZED);
 	}
 
 	// global exception
